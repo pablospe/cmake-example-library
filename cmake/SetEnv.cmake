@@ -8,7 +8,7 @@ set(MINOR_VERSION 1)
 set(PATCH_VERSION 0)
 set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
-# Offer the user the choice of overriding the installation directories
+# Offer the user the chance to override the installation directories
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
 set(INSTALL_INCLUDE_DIR include CACHE PATH
