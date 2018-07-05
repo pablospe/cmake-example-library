@@ -4,8 +4,10 @@ cmake-example-library
 This is an example of how to install a library with CMake, and then use
 `find_package()` command to find it.
 
-The **advantage** of this example is that it is auto generated. It is only
-needed to change the *project name*.
+In this example, Foo is the library and Bar a binary (which uses the library).
+
+The **advantage** of this example is that it is auto-generated. You only need to change
+the *project name*.
 
 It is based on the these two examples:
   * [How to create a ProjectConfig.cmake file (cmake.org)]
@@ -21,10 +23,12 @@ Follow these steps:
 
   * Change project name in the top-level `CMakeLists.txt`.
 
-  * (Optionally) Set the variables: `LIBRARY_NAME` and `LIBRARY_FOLDER`.
-    Otherwise project name in lowercase will be used.
+  * [Optional] Set variables: `LIBRARY_NAME` and `LIBRARY_FOLDER`.
+    If it is not set explicitally, project name in lowercase will be used.
+    See `cmake/SetEnv.cmake` file to see the implementation details.
 
-    See `cmake/SetEnv.cmake` file to see the difference.
+  * [Optional] 'examples/' folder can be removed, it is the 'bar' example.
+    In this case, remove the 'add_subdirectory(examples)' too.
 
 ### How to compile?
 
@@ -32,8 +36,8 @@ Assume the following settings:
 
     project(Foo)
     ...
-    set(LIBRARY_NAME foo)   # generated automatically (in lowercase)
-    set(LIBRARY_FOLDER foo) # generated automatically (in lowercase)
+    set(LIBRARY_NAME foo)   # [optional] generated automatically (in lowercase)
+    set(LIBRARY_FOLDER foo) # [optional] generated automatically (in lowercase)
 
 Example of a local installation:
 
@@ -65,11 +69,11 @@ Unintall library:
 
     > make uninstall
 
-### How to use it (internally)?
+### How to use the library (internally)?
 
 See the [bar example](examples/).
 
-### How to use it (in an external project)?
+### How to use the library (in an external project)?
 
 Once the library is installed, CMake will be able to find it using
 `find_package()` command. For example:
