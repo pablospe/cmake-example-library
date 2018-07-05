@@ -8,25 +8,34 @@ set(MINOR_VERSION 1)
 set(PATCH_VERSION 0)
 set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
-# Offer the user the chance to override the installation directories
-set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
-set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
-set(INSTALL_INCLUDE_DIR include CACHE PATH
-  "Installation directory for header files")
+# INSTALL_LIB_DIR
+set(INSTALL_LIB_DIR lib
+    CACHE PATH "Relative instalation path for libraries")
+
+# INSTALL_BIN_DIR
+set(INSTALL_BIN_DIR bin
+    CACHE PATH "Relative instalation path for executables")
+
+# INSTALL_INCLUDE_DIR
+set(INSTALL_INCLUDE_DIR include
+    CACHE PATH "Relative instalation path for header files")
+
+# INSTALL_CMAKE_DIR
 if(WIN32 AND NOT CYGWIN)
   set(DEF_INSTALL_CMAKE_DIR CMake)
 else()
   set(DEF_INSTALL_CMAKE_DIR lib/CMake/${PROJECT_NAME})
 endif()
-set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH
-  "Installation directory for CMake files")
+set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR}
+    CACHE PATH "Relative instalation path for CMake files")
 
-# Make relative paths absolute (needed later on)
-foreach(p LIB BIN INCLUDE CMAKE)
-  set(var INSTALL_${p}_DIR)
-  if(NOT IS_ABSOLUTE "${${var}}")
+# Convert relative path to absolute path (needed later on)
+foreach(substring LIB BIN INCLUDE CMAKE)
+  set(var INSTALL_${substring}_DIR)
+  if(NOT IS_ABSOLUTE ${${var}})
     set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
   endif()
+  message(STATUS "${var}: "  "${${var}}")
 endforeach()
 
 # Set up include-directories
