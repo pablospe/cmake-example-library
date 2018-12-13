@@ -10,21 +10,21 @@ set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
 # INSTALL_LIB_DIR
 set(INSTALL_LIB_DIR lib
-    CACHE PATH "Relative instalation path for libraries")
+    CACHE PATH "Relative installation path for libraries")
 
 # INSTALL_BIN_DIR
 set(INSTALL_BIN_DIR bin
-    CACHE PATH "Relative instalation path for executables")
+    CACHE PATH "Relative installation path for executables")
 
 # INSTALL_INCLUDE_DIR
 set(INSTALL_INCLUDE_DIR include
-    CACHE PATH "Relative instalation path for header files")
+    CACHE PATH "Relative installation path for header files")
 
 # INSTALL_CMAKE_DIR
 if(WIN32 AND NOT CYGWIN)
-  set(DEF_INSTALL_CMAKE_DIR CMake)
+  set(DEF_INSTALL_CMAKE_DIR cmake)
 else()
-  set(DEF_INSTALL_CMAKE_DIR lib/CMake/${PROJECT_NAME})
+  set(DEF_INSTALL_CMAKE_DIR lib/cmake/${PROJECT_NAME})
 endif()
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR}
     CACHE PATH "Relative instalation path for CMake files")
@@ -58,7 +58,7 @@ endif()
 # The export set for all the targets
 set(PROJECT_EXPORT ${PROJECT_NAME}EXPORT)
 
-# Path of the CNake files generated
+# Path of the CMake files generated
 set(PROJECT_CMAKE_FILES ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY})
 
 # The RPATH to be used when installing
