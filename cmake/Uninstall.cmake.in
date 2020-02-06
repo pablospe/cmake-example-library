@@ -63,6 +63,6 @@ endforeach(dir)
 
 delete_empty_folder("@INSTALL_INCLUDE_DIR@")
 delete_empty_folder("@INSTALL_BIN_DIR@")
-delete_empty_folder("@INSTALL_LIB_DIR@/CMake")
+delete_empty_folder("@INSTALL_LIB_DIR@/cmake")
 delete_empty_folder("@INSTALL_LIB_DIR@")
 message(STATUS "")
