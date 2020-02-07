@@ -27,8 +27,8 @@ Follow these steps:
     If it is not set explicitally, project name in lowercase will be used.
     See `cmake/SetEnv.cmake` file to see the implementation details.
 
-  * [Optional] 'examples/' folder can be removed, it is the 'bar' example.
-    In this case, remove the 'add_subdirectory(examples)' too.
+  * [Optional] 'example_internal/' folder can be removed, it is the 'bar' example.
+    In this case, remove the 'add_subdirectory(example_internal)' too.
 
 ### How to compile?
 
@@ -69,14 +69,11 @@ Unintall library:
 
     > make uninstall
 
-### How to use the library (internally)?
+### How to use the library (internally in subfolders)?
 
-See the [bar example](examples/).
+See the [example of internal subfolder](example_internal/).
 
-### How to use the library (in an external project)?
-
-Once the library is installed, CMake will be able to find it using
-`find_package()` command. For example:
+### How to use the library (as dependency) in an external project?
 
     cmake_minimum_required(VERSION 2.6)
     project(Bar)
@@ -86,3 +83,6 @@ Once the library is installed, CMake will be able to find it using
 
     add_executable(bar bar.cpp)
     target_link_libraries(bar ${FOO_LIBRARIES})
+
+See the [example of external project](example_external/).
+

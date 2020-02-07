@@ -8,7 +8,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/SetEnv.cmake)
 add_subdirectory(${LIBRARY_FOLDER})
 
 # Library examples
-add_subdirectory(examples)
+add_subdirectory(example_internal)
 
 # Install targets
 include(${CMAKE_SOURCE_DIR}/cmake/InstallConfig.cmake)
