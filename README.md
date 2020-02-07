@@ -67,7 +67,7 @@ Installed files:
         │       └── FooTargets-noconfig.cmake
         └── libfoo.so
 
-Unintall library:
+Uninstall library:
 
     > make uninstall
 
