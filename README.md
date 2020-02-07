@@ -19,7 +19,9 @@ It is based on the these two examples:
 
 Follow these steps:
 
-  * Copy files in a new folder.
+  * Copy files in a new folder, or clone with git:
+
+    > git clone git@github.com:pablospe/cmake-example-library.git
 
   * Change project name in the top-level `CMakeLists.txt`.
 
