@@ -1,7 +1,17 @@
 # Set SOURCES variable
-file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+set(SOURCES
+  foo.cpp
+)
 
-# Set HEADERS variable
-file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+# Set HEADERS_PUBLIC variable (public headers, included in the library)
+set(HEADERS_PUBLIC
+  foo.h
+)
+
+# Set HEADERS_PRIVATE variable, if needed.
+# (these private headers won't be included in the library)
+# set(HEADERS_PRIVATE
+#     foo_private.h
+# )
 
 include(${CMAKE_SOURCE_DIR}/cmake/LibraryConfig.cmake)

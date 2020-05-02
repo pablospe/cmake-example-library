@@ -2,49 +2,7 @@
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
 
-# Version variables
-set(MAJOR_VERSION 0)
-set(MINOR_VERSION 1)
-set(PATCH_VERSION 0)
-set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
-
-# INSTALL_LIB_DIR
-set(INSTALL_LIB_DIR lib
-    CACHE PATH "Relative installation path for libraries")
-
-# INSTALL_BIN_DIR
-set(INSTALL_BIN_DIR bin
-    CACHE PATH "Relative installation path for executables")
-
-# INSTALL_INCLUDE_DIR
-set(INSTALL_INCLUDE_DIR include
-    CACHE PATH "Relative installation path for header files")
-
-# INSTALL_CMAKE_DIR
-if(WIN32 AND NOT CYGWIN)
-  set(DEF_INSTALL_CMAKE_DIR cmake)
-else()
-  set(DEF_INSTALL_CMAKE_DIR lib/cmake/${PROJECT_NAME})
-endif()
-set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR}
-    CACHE PATH "Relative instalation path for CMake files")
-
-# Convert relative path to absolute path (needed later on)
-foreach(substring LIB BIN INCLUDE CMAKE)
-  set(var INSTALL_${substring}_DIR)
-  if(NOT IS_ABSOLUTE ${${var}})
-    set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
-  endif()
-  message(STATUS "${var}: "  "${${var}}")
-endforeach()
-
-# Set up include-directories
-include_directories(
-  "${PROJECT_SOURCE_DIR}"
-  "${PROJECT_BINARY_DIR}")
-
-# Library name (by default is the project name in lowercase)
-# Example: libfoo.so
+# Library name (by default is the project name)
 if(NOT LIBRARY_NAME)
   set(LIBRARY_NAME ${PROJECT_NAME_LOWERCASE})
 endif()
@@ -55,11 +13,82 @@ if(NOT LIBRARY_FOLDER)
   set(LIBRARY_FOLDER ${PROJECT_NAME_LOWERCASE})
 endif()
 
-# The export set for all the targets
-set(PROJECT_EXPORT ${PROJECT_NAME}EXPORT)
+# Make sure different configurations don't collide
+set(CMAKE_DEBUG_POSTFIX "-d")
 
-# Path of the CMake files generated
-set(PROJECT_CMAKE_FILES ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY})
+# Select library type (SHARED or STATIC)
+option(BUILD_SHARED_LIBS "Build ${PROJECT_NAME} as a shared library." OFF)
 
-# The RPATH to be used when installing
-set(CMAKE_INSTALL_RPATH ${INSTALL_LIB_DIR})
+# Set a default build type if none was specified
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "CMAKE_BUILD_TYPE: Release")
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+
+# Generated headers folder
+set(GENERATED_HEADERS_DIR
+  "${CMAKE_CURRENT_BINARY_DIR}/generated_headers"
+)
+
+# Create 'version.h'
+configure_file(
+  "${CMAKE_SOURCE_DIR}/${LIBRARY_FOLDER}/version.h.in"
+  "${GENERATED_HEADERS_DIR}/${LIBRARY_FOLDER}/version.h"
+  @ONLY
+)
+
+
+# Introduce variables:
+#   * CMAKE_INSTALL_LIBDIR
+#   * CMAKE_INSTALL_BINDIR
+#   * CMAKE_INSTALL_INCLUDEDIR
+include(GNUInstallDirs)
+
+# Layout. This works for all platforms:
+#   * <prefix>/lib*/cmake/<PROJECT-NAME>
+#   * <prefix>/lib*/
+#   * <prefix>/include/
+set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+
+# Configuration
+set(GENERATED_DIR       "${CMAKE_CURRENT_BINARY_DIR}/generated")
+set(VERSION_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
+set(PROJECT_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+
+
+# Include module with functions:
+#   * write_basic_package_version_file(...)
+#   * configure_package_config_file(...)
+include(CMakePackageConfigHelpers)
+
+# Configure '<PROJECT-NAME>ConfigVersion.cmake'
+# Use:
+#   * PROJECT_VERSION
+write_basic_package_version_file(
+    "${VERSION_CONFIG_FILE}"
+    VERSION "${${PROJECT_NAME}_VERSION}"
+    COMPATIBILITY SameMajorVersion
+)
+
+# Configure '<PROJECT-NAME>Config.cmake'
+# Use variables:
+#   * TARGETS_EXPORT_NAME
+#   * PROJECT_NAME
+configure_package_config_file(
+    "${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in"
+    "${PROJECT_CONFIG_FILE}"
+      INSTALL_DESTINATION "${CONFIG_INSTALL_DIR}"
+)
+
+# Uninstall targets
+configure_file("${CMAKE_SOURCE_DIR}/cmake/Uninstall.cmake.in"
+  "${GENERATED_DIR}/Uninstall.cmake"
+  IMMEDIATE @ONLY)
+add_custom_target(uninstall
+  COMMAND ${CMAKE_COMMAND} -P ${GENERATED_DIR}/Uninstall.cmake)

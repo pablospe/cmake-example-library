@@ -3,6 +3,6 @@
 
 #include <foo/version.h>
 
-void foo(void);
+void foo_print_version(void);
 
 #endif
