@@ -81,10 +81,8 @@ See the [example of internal subfolder](example_internal/).
     project(Bar)
 
     find_package(Foo REQUIRED)
-    include_directories(${FOO_INCLUDE_DIRS})
 
     add_executable(bar bar.cpp)
-    target_link_libraries(bar ${FOO_LIBRARIES})
+    target_link_libraries(bar PRIVATE Foo::Foo)
 
 See the [example of external project](example_external/).
-

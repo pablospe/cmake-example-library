@@ -7,7 +7,7 @@
 #   * Foo::foo linked automatically
 #   * headers can be included by C++ code `#include <foo/foo.h>`
 #   * FOO_DEBUG=1 added on Debug
-#   * FOO_DEBUG=0 added on other configurations
+#   * FOO_DEBUG=0 added otherwise
 
 # Set minimum version of CMake.
 cmake_minimum_required(VERSION 3.9) # GENERATOR_IS_MULTI_CONFIG

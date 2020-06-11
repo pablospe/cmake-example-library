@@ -29,7 +29,6 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-
 # Generated headers folder
 set(GENERATED_HEADERS_DIR
   "${CMAKE_CURRENT_BINARY_DIR}/generated_headers"
@@ -41,7 +40,6 @@ configure_file(
   "${GENERATED_HEADERS_DIR}/${LIBRARY_FOLDER}/version.h"
   @ONLY
 )
-
 
 # Introduce variables:
 #   * CMAKE_INSTALL_LIBDIR
@@ -60,7 +58,6 @@ set(GENERATED_DIR       "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(VERSION_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
 set(PROJECT_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
-
 
 # Include module with functions:
 #   * write_basic_package_version_file(...)

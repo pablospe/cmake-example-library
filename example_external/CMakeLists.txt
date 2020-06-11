@@ -8,4 +8,4 @@ find_package(Foo 1.0 CONFIG REQUIRED)
 add_executable(bar bar.cpp)
 
 # add library
-target_link_libraries(bar Foo::foo)
+target_link_libraries(bar PRIVATE Foo::Foo)
