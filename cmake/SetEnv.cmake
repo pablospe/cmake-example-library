@@ -14,7 +14,7 @@ if(NOT LIBRARY_FOLDER)
 endif()
 
 # Make sure different configurations don't collide
-set(CMAKE_DEBUG_POSTFIX "-d")
+set(CMAKE_DEBUG_POSTFIX "d")
 
 # Select library type (SHARED or STATIC)
 option(BUILD_SHARED_LIBS "Build ${PROJECT_NAME} as a shared library." OFF)
