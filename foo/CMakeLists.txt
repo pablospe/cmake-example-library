@@ -14,4 +14,4 @@ set(HEADERS_PUBLIC
 #     foo_private.h
 # )
 
-include(${CMAKE_SOURCE_DIR}/cmake/LibraryConfig.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/LibraryConfig.cmake)

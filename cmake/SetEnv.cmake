@@ -37,7 +37,7 @@ set(GENERATED_HEADERS_DIR
 
 # Create 'version.h'
 configure_file(
-  "${CMAKE_SOURCE_DIR}/${LIBRARY_FOLDER}/version.h.in"
+  "${PROJECT_SOURCE_DIR}/${LIBRARY_FOLDER}/version.h.in"
   "${GENERATED_HEADERS_DIR}/${LIBRARY_FOLDER}/version.h"
   @ONLY
 )
@@ -81,13 +81,13 @@ write_basic_package_version_file(
 #   * TARGETS_EXPORT_NAME
 #   * PROJECT_NAME
 configure_package_config_file(
-    "${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in"
+    "${PROJECT_SOURCE_DIR}/cmake/Config.cmake.in"
     "${PROJECT_CONFIG_FILE}"
       INSTALL_DESTINATION "${CONFIG_INSTALL_DIR}"
 )
 
 # Uninstall targets
-configure_file("${CMAKE_SOURCE_DIR}/cmake/Uninstall.cmake.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/Uninstall.cmake.in"
   "${GENERATED_DIR}/Uninstall.cmake"
   IMMEDIATE @ONLY)
 add_custom_target(uninstall

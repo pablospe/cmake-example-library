@@ -21,7 +21,7 @@ project(Foo VERSION 1.2.3)
 #   * LIBRARY_NAME
 #   * LIBRARY_FOLDER
 #   ...
-include(${CMAKE_SOURCE_DIR}/cmake/SetEnv.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/SetEnv.cmake)
 
 # Library sources
 add_subdirectory(${LIBRARY_FOLDER})
