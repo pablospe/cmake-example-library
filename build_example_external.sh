@@ -49,7 +49,8 @@ cmake \
 
 # run
 BIN_PATH=${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR}
-if [ -f ${BIN_PATH}/${BUILD_TYPE}/ ]; then  # multi-config generator
-   BIN_PATH=${BIN_PATH}/bar
+echo ${BIN_PATH}/${BUILD_TYPE}/
+if [ -d "${BIN_PATH}/${BUILD_TYPE}" ]; then  # multi-config generator
+   BIN_PATH=${BIN_PATH}/${BUILD_TYPE}
 fi
 ${BIN_PATH}/bar
