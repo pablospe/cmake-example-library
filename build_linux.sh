@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # This script can be called from anywhere and allows to build out of source.
-# Note: it is assumed Git for Windows is installed (https://gitforwindows.org/).
 
 # Determine script absolute path
 SCRIPT_ABS_PATH=$(readlink -f ${BASH_SOURCE[0]})
@@ -35,11 +34,11 @@ echo ""
 cmake \
     -S . \
     -B ${BUILD_DIR} \
+    -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}"
 
 # compile & install
 cmake \
     --build ${BUILD_DIR} \
-    --config ${BUILD_TYPE} \
     --target install \
     -j 8

@@ -48,4 +48,8 @@ cmake \
     -j 8
 
 # run
-${SCRIPT_ABS_PATH}/example_external/_build/${BUILD_TYPE}/bar
+BIN_PATH=${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR}
+if [ -f ${BIN_PATH}/${BUILD_TYPE}/ ]; then  # multi-config generator
+   BIN_PATH=${BIN_PATH}/bar
+fi
+${BIN_PATH}/bar
