@@ -11,7 +11,7 @@ cd ${SCRIPT_ABS_PATH}
 
 # Choose build type
 BUILD_TYPE=Release
-# BUILD_TYPE=Debug
+BUILD_TYPE=Debug
 
 # Choose build type
 BUILD_DIR=_build
@@ -33,19 +33,40 @@ echo ""
 printf "\n\n ----- example_external ----- \n\n"
 
 # clean
-# rm -fr example_external/${BUILD_DIR}
+rm -fr example_external/${BUILD_DIR}
 
-# cmake
-cmake \
-    -S ${SCRIPT_ABS_PATH}/example_external/ \
-    -B ${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR} \
-    -DFoo_DIR="${SCRIPT_ABS_PATH}/${INSTALL_DIR}/lib/cmake/Foo/"
+SO=`uname`
+if [[ $SO == "Linux" ]]; then
+    echo "Running on Linux"
 
-# compile
-cmake \
-    --build ${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR} \
-    --config ${BUILD_TYPE} \
-    -j 8
+    # cmake
+    cmake \
+        -S ${SCRIPT_ABS_PATH}/example_external/ \
+        -B ${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR} \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+        -DFoo_DIR="${SCRIPT_ABS_PATH}/${INSTALL_DIR}/lib/cmake/Foo/"
+
+    # compile
+    cmake \
+        --build ${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR} \
+        -j 8
+
+else
+    echo "Running on Windows"
+
+    # cmake
+    cmake \
+        -S ${SCRIPT_ABS_PATH}/example_external/ \
+        -B ${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR} \
+        -DFoo_DIR="${SCRIPT_ABS_PATH}/${INSTALL_DIR}/lib/cmake/Foo/"
+
+    # compile
+    cmake \
+        --build ${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR} \
+        --config ${BUILD_TYPE} \
+        -j 8
+fi
+
 
 # run
 BIN_PATH=${SCRIPT_ABS_PATH}/example_external/${BUILD_DIR}
