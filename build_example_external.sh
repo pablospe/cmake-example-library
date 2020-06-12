@@ -33,7 +33,7 @@ echo ""
 printf "\n\n ----- example_external ----- \n\n"
 
 # clean
-rm -fr example_external/${BUILD_DIR}
+# rm -fr example_external/${BUILD_DIR}
 
 SO=`uname`
 if [[ $SO == "Linux" ]]; then
