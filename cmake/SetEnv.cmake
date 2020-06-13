@@ -4,7 +4,7 @@ string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
 
 # Library name (by default is the project name)
 if(NOT LIBRARY_NAME)
-  set(LIBRARY_NAME ${PROJECT_NAME})
+  set(LIBRARY_NAME ${PROJECT_NAME_LOWERCASE})
 endif()
 
 # Library folder name (by default is the project name in lowercase)
