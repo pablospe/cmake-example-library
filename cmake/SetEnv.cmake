@@ -43,15 +43,15 @@ configure_file(
 )
 
 # Introduce variables:
-#   * CMAKE_INSTALL_LIBDIR
-#   * CMAKE_INSTALL_BINDIR
-#   * CMAKE_INSTALL_INCLUDEDIR
+#   - CMAKE_INSTALL_LIBDIR
+#   - CMAKE_INSTALL_BINDIR
+#   - CMAKE_INSTALL_INCLUDEDIR
 include(GNUInstallDirs)
 
 # Layout. This works for all platforms:
-#   * <prefix>/lib*/cmake/<PROJECT-NAME>
-#   * <prefix>/lib*/
-#   * <prefix>/include/
+#   - <prefix>/lib*/cmake/<PROJECT-NAME>
+#   - <prefix>/lib*/
+#   - <prefix>/include/
 set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 
 # Configuration
@@ -61,13 +61,13 @@ set(PROJECT_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 
 # Include module with functions:
-#   * write_basic_package_version_file(...)
-#   * configure_package_config_file(...)
+#   - write_basic_package_version_file(...)
+#   - configure_package_config_file(...)
 include(CMakePackageConfigHelpers)
 
 # Configure '<PROJECT-NAME>ConfigVersion.cmake'
 # Use:
-#   * PROJECT_VERSION
+#   - PROJECT_VERSION
 write_basic_package_version_file(
     "${VERSION_CONFIG_FILE}"
     VERSION "${${PROJECT_NAME}_VERSION}"
@@ -76,8 +76,8 @@ write_basic_package_version_file(
 
 # Configure '<PROJECT-NAME>Config.cmake'
 # Use variables:
-#   * TARGETS_EXPORT_NAME
-#   * PROJECT_NAME
+#   - TARGETS_EXPORT_NAME
+#   - PROJECT_NAME
 configure_package_config_file(
     "${PROJECT_SOURCE_DIR}/cmake/Config.cmake.in"
     "${PROJECT_CONFIG_FILE}"
@@ -91,9 +91,8 @@ configure_file("${PROJECT_SOURCE_DIR}/cmake/Uninstall.cmake.in"
 add_custom_target(uninstall
   COMMAND ${CMAKE_COMMAND} -P ${GENERATED_DIR}/Uninstall.cmake)
 
-
 # Always full RPATH (for shared libraries)
-# https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
+#  https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
 if(BUILD_SHARED_LIBS)
   # use, i.e. don't skip the full RPATH for the build tree
   set(CMAKE_SKIP_BUILD_RPATH FALSE)
