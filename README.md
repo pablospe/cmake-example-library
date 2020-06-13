@@ -10,9 +10,8 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
 ### Features
 
   * The main **advantage** of this example is that it is _auto-generated_.
-    You only need to change the _project name_.
-
-  * `find_package(...)`
+    You only need to change the _project name_, and add the files that need to
+    be compiled in [foo/CMakeLists.txt](foo/CMakeLists.txt).
 
   * Autogenetared library version file: `#include <foo/version.h>`
 
@@ -25,7 +24,8 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
     See [cmake/SetEnv.cmake#L19-L21](cmake/SetEnv.cmake#L19-L21).
 
   * `CMAKE_BUILD_TYPE` possible options in `cmake-gui`.
-    For multi-config generator, `CMAKE_CONFIGURATION_TYPES` is set instead.
+    For multi-config generator, `CMAKE_CONFIGURATION_TYPES` is set instead of
+    `CMAKE_BUILD_TYPE`.
     See [cmake/SetEnv.cmake#L23-L48](cmake/SetEnv.cmake#L23-L48).
 
   * `Uninstall` target.
@@ -37,7 +37,9 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
 
 ### Usage
 
-Once the library is installed, it can be found externally with `find_package(...)`:
+Once the library is installed (see
+"[how to compile?](https://github.com/pablospe/cmake-example-library/tree/moderm_cmake#how-to-compile)"), it can be found externally with
+`find_package(...)`:
 
     find_package(Foo <VERSION> REQUIRED)
     target_link_libraries(... Foo::foo)
@@ -61,8 +63,8 @@ Follow these steps:
     If it is not set explicitally, project name in lowercase will be used.
     See `cmake/SetEnv.cmake` file to see the implementation details.
 
-  * [Optional] 'example_internal/' folder can be removed, it is the 'bar' example.
-    In this case, remove the 'add_subdirectory(example_internal)' too.
+  * [Optional] 'example_internal/' folder can be removed, it is the 'bar'
+    example. In this case, remove the 'add_subdirectory(example_internal)' too.
 
 ### How to compile?
 
@@ -132,7 +134,8 @@ See the [example of internal subfolder](example_internal/).
 ### How to use the library (as dependency) in an external project?
 
 See the [example of external project](example_external/).
-Once the library is intalled, cmake would be able to find it using `find_package(...)` command.
+Once the library is intalled, cmake would be able to find it using
+`find_package(...)` command.
 
     cmake_minimum_required(VERSION 3.9)
     project(Bar)
@@ -175,5 +178,7 @@ Some ideas from:
   * https://github.com/forexample/package-example
 
 Modern CMake tutorials (youtube):
-  * C++Now 2017: Daniel Pfeifer [Effective CMake](https://www.youtube.com/watch?v=bsXLMQ6WgI)
-  * CppCon 2018: Mateusz Pusz [Git, CMake, Conan - How to ship and reuse our C++ projects](https://www.youtube.com/watch?v=S4QSKLXdTtA)
+  * C++Now 2017: Daniel Pfeifer
+    [Effective CMake](https://www.youtube.com/watch?v=bsXLMQ6WgI)
+  * CppCon 2018: Mateusz Pusz
+    [Git, CMake, Conan - How to ship and reuse our C++ projects](https://www.youtube.com/watch?v=S4QSKLXdTtA)
