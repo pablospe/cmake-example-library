@@ -17,7 +17,7 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
 
   * `FOO_DEBUG` added on Debug. See [foo/foo.cpp#L7-L11](foo/foo.cpp#L7-L11).
 
-  * `CMAKE_DEBUG_POSTFIX = 'd'`.
+  * `CMAKE_DEBUG_POSTFIX = 'd'` (allowing `Debug` and `Release` to not collide).
      See [cmake/SetEnv.cmake#L17](cmake/SetEnv.cmake#L17).
 
   * Static library as default (`BUILD_SHARED_LIBS=OFF`).
