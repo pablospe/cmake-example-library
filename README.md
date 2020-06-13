@@ -14,18 +14,25 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
 
   * `find_package(...)`
 
-  * Autogenetared version file: `#include <foo/version.h>`
+  * Autogenetared library version file: `#include <foo/version.h>`
 
-  * Static library as default (`BUILD_SHARED_LIBS=OFF`)
+  * `FOO_DEBUG` added on Debug. See [foo/foo.cpp#L7-L11](foo/foo.cpp#L7-L11).
 
-  * `FOO_DEBUG` added on Debug. See [foo/foo.cpp](foo/foo.cpp#L7-L11).
+  * `CMAKE_DEBUG_POSTFIX = 'd'`.
+     See [cmake/SetEnv.cmake#L17](cmake/SetEnv.cmake#L17).
 
-  * `CMAKE_DEBUG_POSTFIX = 'd'`. See [cmake/SetEnv.cmake#L17](https://github.com/pablospe/cmake-example-library/blob/moderm_cmake/cmake/SetEnv.cmake#L17)
+  * Static library as default (`BUILD_SHARED_LIBS=OFF`).
+    See [cmake/SetEnv.cmake#L19-L21](cmake/SetEnv.cmake#L19-L21).
 
   * `CMAKE_BUILD_TYPE` possible options in `cmake-gui`.
-     For multi-config generator, `CMAKE_CONFIGURATION_TYPES` is set instead.
+    For multi-config generator, `CMAKE_CONFIGURATION_TYPES` is set instead.
+    See [cmake/SetEnv.cmake#L23-L48](cmake/SetEnv.cmake#L23-L48).
 
-  * `Uninstall` target. See [cmake/Uninstall.cmake.in](cmake/Uninstall.cmake.in).
+  * `Uninstall` target.
+    See [cmake/SetEnv.cmake#L104-L109](cmake/SetEnv.cmake#L104-L109).
+
+  * Always full RPATH (for shared libraries).
+    See [cmake/SetEnv.cmake#L111-L132](cmake/SetEnv.cmake#L111-L132).
 
 
 ### Usage
