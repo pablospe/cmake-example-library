@@ -2,6 +2,7 @@ cmake-example-library
 =====================
 
 CMake library example that can be found using `find_package()`.
+Using modern cmake (version >= 3.9).
 
 In this example, `Foo` is the library and `Bar` a binary (which uses the library).
 
@@ -18,7 +19,7 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
   * `FOO_DEBUG` added on Debug. See [foo/foo.cpp](foo/foo.cpp) file.
 
 
-#### Usage
+### Usage
 
 Once the library is installed, it can be found externally with `find_package(...)`:
 
@@ -61,6 +62,7 @@ Example of a local installation:
     > mkdir _build && cd _build
     > cmake -DCMAKE_INSTALL_PREFIX=../_install ..
     > cmake --build . --target install -j 8
+      (equivalent to  'make install -j8' in linux)
 
 Installed files:
 
