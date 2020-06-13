@@ -9,21 +9,26 @@ SCRIPT_ABS_PATH=$(dirname ${SCRIPT_ABS_PATH})
 # switch to script path
 cd ${SCRIPT_ABS_PATH}
 
-# Choose build type
+# Build type
 BUILD_TYPE=Release
 # BUILD_TYPE=Debug
 
-# Choose build type
+# Build folder
 BUILD_DIR=_build
 
-# Choose install folder
+# Installation folder
 INSTALL_DIR=_install
+
+# Library type
+BUILD_SHARED_LIBS=OFF    # Static
+# BUILD_SHARED_LIBS=ON   # Shared
 
 # Options summary
 echo ""
-echo "BUILD_TYPE  =" ${BUILD_TYPE}
-echo "BUILD_DIR   =" ${SCRIPT_ABS_PATH}/${BUILD_DIR}/
-echo "INSTALL_DIR =" ${SCRIPT_ABS_PATH}/${INSTALL_DIR}/
+echo "BUILD_TYPE        =" ${BUILD_TYPE}
+echo "BUILD_DIR         =" ${SCRIPT_ABS_PATH}/${BUILD_DIR}/
+echo "INSTALL_DIR       =" ${SCRIPT_ABS_PATH}/${INSTALL_DIR}/
+echo "BUILD_SHARED_LIBS =" ${BUILD_SHARED_LIBS}
 echo ""
 
 
@@ -35,6 +40,7 @@ cmake \
     -S . \
     -B ${BUILD_DIR} \
     -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS} \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}"
 
 # compile & install
