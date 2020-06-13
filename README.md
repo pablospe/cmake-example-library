@@ -2,7 +2,7 @@ cmake-example-library
 =====================
 
 CMake library example that can be found using `find_package()`.
-Using modern cmake (version >= 3.9).
+**Note:** using modern cmake (version >= 3.9) since commit [46f0b93](https://github.com/pablospe/cmake-example-library/commit/46f0b93e9725588d344f9b3231c6da77ea11a1bc).
 
 In this example, `Foo` is the library and `Bar` a binary (which uses the library).
 
@@ -23,9 +23,9 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
   * Static library as default (`BUILD_SHARED_LIBS=OFF`).
     See [cmake/SetEnv.cmake#L19-L21](cmake/SetEnv.cmake#L19-L21).
 
-  * `CMAKE_BUILD_TYPE` possible options in `cmake-gui`.
-    For multi-config generator, `CMAKE_CONFIGURATION_TYPES` is set instead of
-    `CMAKE_BUILD_TYPE`.
+  * `cmake-gui` shows possible options for `CMAKE_BUILD_TYPE` (Release, Debug,
+    etc.). For _multi-config_ generator, `CMAKE_CONFIGURATION_TYPES` is set
+    instead of `CMAKE_BUILD_TYPE`.
     See [cmake/SetEnv.cmake#L23-L48](cmake/SetEnv.cmake#L23-L48).
 
   * `Uninstall` target.
