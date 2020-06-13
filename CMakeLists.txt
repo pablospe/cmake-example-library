@@ -1,26 +1,10 @@
-# After installation this project can be found by 'find_package(...)':
-#
-#    find_package(Foo <VERSION> REQUIRED)
-#    target_link_libraries(... Foo::foo)
-#
-# Note that requirements propagated automatically, for example:
-#   * Foo::foo linked automatically
-#   * headers can be included by C++ code `#include <foo/foo.h>`
-#   * FOO_DEBUG=1 added on Debug
-#   * FOO_DEBUG=0 added otherwise
-
 # Set minimum version of CMake.
-cmake_minimum_required(VERSION 3.9) # GENERATOR_IS_MULTI_CONFIG
+cmake_minimum_required(VERSION 3.9)
 
-# Set project variables:
-#   * PROJECT_NAME
-#   * PROJECT_VERSION
+# Set project name and version
 project(Foo VERSION 1.2.3)
 
-# Set environment variables:
-#   * LIBRARY_NAME
-#   * LIBRARY_FOLDER
-#   ...
+# Set environment variables
 include(${PROJECT_SOURCE_DIR}/cmake/SetEnv.cmake)
 
 # Library sources
