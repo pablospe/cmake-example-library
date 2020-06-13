@@ -20,15 +20,32 @@ set(CMAKE_DEBUG_POSTFIX "d")
 option(BUILD_SHARED_LIBS "Build ${LIBRARY_NAME} as a shared library." OFF)
 message(STATUS "BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
 
-# Set a default build type if none was specified
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "CMAKE_BUILD_TYPE: Release")
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+# Build type (default: RELEASE)
+#
+# No reason to set CMAKE_CONFIGURATION_TYPES if it's not a multiconfig generator
+# Also no reason of using CMAKE_BUILD_TYPE if it's a multiconfig generator.
+#
+get_property(isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(isMultiConfig)
+  set(CMAKE_CONFIGURATION_TYPES
+      "Release;Debug;MinSizeRel;RelWithDebInfo" CACHE STRING "" FORCE)
+
+  message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+  message(STATUS "CMAKE_GENERATOR: Multi-config")
+else()
+  # Set a default build type if none was specified
+  if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  endif()
 
   # Set the possible values of build type for cmake-gui
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+               "Release" "Debug" "MinSizeRel" "RelWithDebInfo")
+
+  message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+  message(STATUS "CMAKE_GENERATOR: Single-config")
 endif()
+message(STATUS "CMAKE_GENERATOR: ${CMAKE_GENERATOR}")
 
 # Generated headers folder
 set(GENERATED_HEADERS_DIR
