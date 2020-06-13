@@ -14,9 +14,18 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
 
   * `find_package(...)`
 
-  * Version file: `#include <foo/version.h>`
+  * Autogenetared version file: `#include <foo/version.h>`
 
-  * `FOO_DEBUG` added on Debug. See [foo/foo.cpp](foo/foo.cpp) file.
+  * Static library as default (`BUILD_SHARED_LIBS=OFF`)
+
+  * `FOO_DEBUG` added on Debug. See [foo/foo.cpp](foo/foo.cpp#L7-L11).
+
+  * `CMAKE_DEBUG_POSTFIX = 'd'`. See [cmake/SetEnv.cmake#L17](https://github.com/pablospe/cmake-example-library/blob/moderm_cmake/cmake/SetEnv.cmake#L17)
+
+  * `CMAKE_BUILD_TYPE` possible options in `cmake-gui`.
+     For multi-config generator, `CMAKE_CONFIGURATION_TYPES` is set instead.
+
+  * `Uninstall` target. See [cmake/Uninstall.cmake.in](cmake/Uninstall.cmake.in).
 
 
 ### Usage
