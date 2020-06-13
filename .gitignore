@@ -1,5 +1,7 @@
 # builds
 build*/*
+_build/
+_install/
 
 # kdevelop
 *.kdev4

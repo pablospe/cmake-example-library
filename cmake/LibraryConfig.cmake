@@ -1,38 +1,77 @@
-# Select library type
-set(_PN ${PROJECT_NAME})
-option(BUILD_SHARED_LIBS "Build ${_PN} as a shared library." ON)
-if(BUILD_SHARED_LIBS)
-  set(LIBRARY_TYPE SHARED)
-else()
-  set(LIBRARY_TYPE STATIC)
-endif()
-
-# Set a default build type if none was specified
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to 'Release'.")
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-
-  # Set the possible values of build type for cmake-gui
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-endif()
-
 # Target
-add_library(${LIBRARY_NAME} ${LIBRARY_TYPE} ${SOURCES} ${HEADERS})
+add_library(${LIBRARY_NAME}
+  ${SOURCES}
+  ${HEADERS_PUBLIC}
+  ${HEADERS_PRIVATE}
+  )
 
-# Install library
-install(TARGETS ${LIBRARY_NAME}
-  EXPORT ${PROJECT_EXPORT}
-  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
-  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
-  ARCHIVE DESTINATION "${INSTALL_LIB_DIR}" COMPONENT stlib
-  COMPONENT dev)
+# Alias:
+#   - Foo::foo alias of foo
+add_library(${PROJECT_NAME}::${LIBRARY_NAME} ALIAS ${LIBRARY_NAME})
 
-# Create 'version.h'
-configure_file(version.h.in
-  "${CMAKE_CURRENT_BINARY_DIR}/version.h" @ONLY)
-set(HEADERS ${HEADERS} ${CMAKE_CURRENT_BINARY_DIR}/version.h)
+# C++11
+target_compile_features(${LIBRARY_NAME} PUBLIC cxx_std_11)
 
-# Install headers
-install(FILES ${HEADERS}
-  DESTINATION "${INSTALL_INCLUDE_DIR}/${LIBRARY_FOLDER}" )
+# Add definitions for targets
+# Values:
+#   - Debug  : -DFOO_DEBUG=1
+#   - Release: -DFOO_DEBUG=0
+#   - others : -DFOO_DEBUG=0
+target_compile_definitions(${LIBRARY_NAME} PUBLIC
+  "${PROJECT_NAME_UPPERCASE}_DEBUG=$<CONFIG:Debug>")
+
+# Global includes. Used by all targets
+# Note:
+#   - header can be included by C++ code `#include <foo/foo.h>`
+#   - header location in project: ${CMAKE_CURRENT_BINARY_DIR}/generated_headers
+target_include_directories(
+  ${LIBRARY_NAME} PUBLIC
+    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>"
+    "$<BUILD_INTERFACE:${GENERATED_HEADERS_DIR}>"
+    "$<INSTALL_INTERFACE:.>"
+)
+
+# Targets:
+#   - <prefix>/lib/libfoo.a
+#   - header location after install: <prefix>/foo/foo.h
+#   - headers can be included by C++ code `#include <foo/foo.h>`
+install(
+    TARGETS              "${LIBRARY_NAME}"
+    EXPORT               "${TARGETS_EXPORT_NAME}"
+    LIBRARY DESTINATION  "${CMAKE_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION  "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION  "${CMAKE_INSTALL_BINDIR}"
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+)
+
+# Headers:
+#   - foo/*.h -> <prefix>/include/foo/*.h
+install(
+    FILES ${HEADERS_PUBLIC}
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_FOLDER}"
+)
+
+# Headers:
+#   - generated_headers/foo/version.h -> <prefix>/include/foo/version.h
+install(
+    FILES       "${GENERATED_HEADERS_DIR}/${LIBRARY_FOLDER}/version.h"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_FOLDER}"
+)
+
+# Config
+#   - <prefix>/lib/cmake/Foo/FooConfig.cmake
+#   - <prefix>/lib/cmake/Foo/FooConfigVersion.cmake
+install(
+    FILES       "${PROJECT_CONFIG_FILE}"
+                "${VERSION_CONFIG_FILE}"
+    DESTINATION "${CONFIG_INSTALL_DIR}"
+)
+
+# Config
+#   - <prefix>/lib/cmake/Foo/FooTargets.cmake
+install(
+  EXPORT      "${TARGETS_EXPORT_NAME}"
+  FILE        "${PROJECT_NAME}Targets.cmake"
+  DESTINATION "${CONFIG_INSTALL_DIR}"
+  NAMESPACE   "${PROJECT_NAME}::"
+)
