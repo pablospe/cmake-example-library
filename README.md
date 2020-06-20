@@ -34,6 +34,13 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
   * Always full RPATH (for shared libraries).
     See [cmake/SetEnv.cmake#L111-L132](cmake/SetEnv.cmake#L111-L132).
 
+  * CMake Registry: export package to CMake registry such that it can be easily found by CMake even if it has not been installed to a standard directory. See [cmake/SetEnv.cmake#L135](cmake/SetEnv.cmake#L135). Possible options:
+    ```
+    -DCMAKE_REGISTRY_FOLDER="OFF"            (disable CMake registry [default])
+    -DCMAKE_REGISTRY_FOLDER="INSTALL_FOLDER"
+    -DCMAKE_REGISTRY_FOLDER="BUILD_FOLDER"
+    ```
+
 
 ### Usage
 

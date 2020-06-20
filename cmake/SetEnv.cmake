@@ -130,3 +130,6 @@ if(BUILD_SHARED_LIBS)
       set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
   endif()
 endif()
+
+# CMake Registry
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CMakeRegistry.cmake)
