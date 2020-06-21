@@ -2,9 +2,8 @@ cmake-example-library
 =====================
 
 CMake library example that can be found using `find_package()`.
-**Note:** using modern cmake (version >= 3.9) since commit [46f0b93](https://github.com/pablospe/cmake-example-library/commit/46f0b93e9725588d344f9b3231c6da77ea11a1bc).
 
-In this example, `Foo` is the library and `Bar` a binary (which uses the library).
+**Update:** now using modern cmake (version >= 3.9), since commit [46f0b93](https://github.com/pablospe/cmake-example-library/commit/46f0b93e9725588d344f9b3231c6da77ea11a1bc).
 
 
 ### Features
@@ -34,7 +33,8 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
   * Always full RPATH (for shared libraries).
     See [cmake/SetEnv.cmake#L111-L132](cmake/SetEnv.cmake#L111-L132).
 
-  * CMake Registry: export package to CMake registry such that it can be easily found by CMake even if it has not been installed to a standard directory. See [cmake/SetEnv.cmake#L135](cmake/SetEnv.cmake#L135). Possible options:
+  * CMake Registry: export package to CMake registry such that it can be easily found by CMake even if it has not been installed to a standard directory. See [cmake/SetEnv.cmake#L135](cmake/SetEnv.cmake#L135).
+  Possible options:
     ```
     -DCMAKE_REGISTRY_FOLDER="OFF"            (disable CMake registry [default])
     -DCMAKE_REGISTRY_FOLDER="INSTALL_FOLDER"
@@ -44,34 +44,14 @@ In this example, `Foo` is the library and `Bar` a binary (which uses the library
 
 ### Usage
 
-Once the library is installed (see
-"[how to compile?](https://github.com/pablospe/cmake-example-library/tree/moderm_cmake#how-to-compile)"), it can be found externally with
-`find_package(...)`:
+In this example, `Foo` is the library and `Bar` a binary (which uses the library).
+
 
     find_package(Foo <VERSION> REQUIRED)
     target_link_libraries(... Foo::foo)
 
 See [more details](https://github.com/pablospe/cmake-example-library/tree/moderm_cmake#how-to-use-the-library-as-dependency-in-an-external-project) below.
 
-
-### How to create a library from this example?
-
-Follow these steps:
-
-  * Copy files in a new folder, or clone with git:
-
-    > git clone git@github.com:pablospe/cmake-example-library.git
-
-  * Change project name in the top-level `CMakeLists.txt`.
-
-  * Add `.cpp` and `.h` files in `foo/CMakeLists.txt`.
-
-  * [Optional] Set variables: `LIBRARY_NAME` and `LIBRARY_FOLDER`.
-    If it is not set explicitally, project name in lowercase will be used.
-    See `cmake/SetEnv.cmake` file to see the implementation details.
-
-  * [Optional] 'example_internal/' folder can be removed, it is the 'bar'
-    example. In this case, remove the 'add_subdirectory(example_internal)' too.
 
 ### How to compile?
 
@@ -177,6 +157,26 @@ add the command **add_subdirectory(...)**:
     target_link_libraries(<target> PRIVATE Foo::foo)
 
     [...]
+
+
+### How to create a library from this example?
+
+Follow these steps:
+
+  * Copy files in a new folder, or clone with git:
+
+    > git clone git@github.com:pablospe/cmake-example-library.git
+
+  * Change project name in the top-level `CMakeLists.txt`.
+
+  * Add `.cpp` and `.h` files in `foo/CMakeLists.txt`.
+
+  * [Optional] Set variables: `LIBRARY_NAME` and `LIBRARY_FOLDER`.
+    If it is not set explicitally, project name in lowercase will be used.
+    See [cmake/SetEnv.cmake](cmake/SetEnv.cmake) file for implementation details.
+
+  * [Optional] 'example_internal/' folder can be removed, it is the 'bar'
+    example. In this case, remove the 'add_subdirectory(example_internal)' too.
 
 
 ### Documentation
