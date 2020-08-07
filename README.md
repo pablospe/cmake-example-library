@@ -98,9 +98,9 @@ Uninstall library:
 #### Compilation scripts
 
 Please check the following files for more complex compilation examples:
-  - [build_linux.sh](build_linux.sh)
-  - [build_win.sh](build_win.sh)
-  - [build_ninja.sh](build_ninja.sh)
+  - [scripts/build_linux.sh](scripts/build_linux.sh)
+  - [scripts/build_win.sh](scripts/build_win.sh)
+  - [scripts/build_ninja.sh](scripts/build_ninja.sh)
 
 
 ### Static vs Shared

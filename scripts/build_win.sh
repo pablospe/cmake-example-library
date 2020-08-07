@@ -1,13 +1,15 @@
 #!/bin/bash
 
 # This script can be called from anywhere and allows to build out of source.
+# Note: it is assumed Git for Windows is installed (https://gitforwindows.org/).
 
 # Determine script absolute path
 SCRIPT_ABS_PATH=$(readlink -f ${BASH_SOURCE[0]})
 SCRIPT_ABS_PATH=$(dirname ${SCRIPT_ABS_PATH})
 
-# switch to script path
-cd ${SCRIPT_ABS_PATH}
+# switch to root folder, where top-level CMakeLists.txt lives
+ROOT=$(readlink -f ${SCRIPT_ABS_PATH}/../)
+cd $ROOT
 
 # Build type
 BUILD_TYPE=Release
@@ -26,8 +28,8 @@ BUILD_SHARED_LIBS=OFF    # Static
 # Options summary
 echo ""
 echo "BUILD_TYPE        =" ${BUILD_TYPE}
-echo "BUILD_DIR         =" ${SCRIPT_ABS_PATH}/${BUILD_DIR}/
-echo "INSTALL_DIR       =" ${SCRIPT_ABS_PATH}/${INSTALL_DIR}/
+echo "BUILD_DIR         =" ${ROOT}/${BUILD_DIR}/
+echo "INSTALL_DIR       =" ${ROOT}/${INSTALL_DIR}/
 echo "BUILD_SHARED_LIBS =" ${BUILD_SHARED_LIBS}
 echo ""
 
@@ -39,17 +41,12 @@ echo ""
 cmake \
     -S . \
     -B ${BUILD_DIR} \
-    -G"Ninja" \
-    -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS} \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}"
-
-# For multi-config generator:
-    # -G"Ninja Multi-Config" \
-    # -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \  (and remove this line)
 
 # compile & install
 cmake \
     --build ${BUILD_DIR} \
+    --config ${BUILD_TYPE} \
     --target install \
     -j 8
